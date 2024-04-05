@@ -1,0 +1,100 @@
+print("Τιμοκατάλογος:\nEspresso:1.25€\nLatte:2.10€\nCappyccino:2.80€\n")
+coffeemaker='ON'
+kafetiera={"Nero":1000,"Gala":500,"Kafes":250 }
+espresso={"Nero":50,"Gala":0,"Kafes":18}
+latte={"Nero":200,"Gala":150,"Kafes":24}
+cappuccino={"Nero":250,"Gala":100,"Kafes":24}
+
+def eparkeia_ulikwn(x, y):
+    arketa=True
+    while arketa==True:
+        i=0
+        for key in x:
+            if x[key] < y[key] and i==0:
+                print("Συγνώμη, δεν υπάρχει αρκετό νερό.")
+                arketa=False
+                i+=1
+            elif x[key]<y[key] and i==1:
+                print("Συγνώμη, δεν υπάρχει αρκετό γάλα.")
+                arketa=False
+                i += 1
+            elif x[key]<y[key] and i==2:
+                print("Συγνώμη, δεν υπάρχει αρκετός καφές.")
+                arketa=False
+                i += 1
+        break
+    return arketa
+
+def nomismata(x):
+    y=0
+    while y!=x:
+        a=int(input("Πόσα νομίσματα των 2€ θα εισάγετε;"))
+        b=int(input("Πόσα νομίσματα του 1€ θα εισάγετε;"))
+        c=int(input("Πόσα νομίσματα των 0.50€ θα εισάγετε;"))
+        d=int(input("Πόσα νομίσματα των 0.20€ θα εισάγετε;"))
+        e=int(input("Πόσα νομίσματα των 0.10€ θα ειγάγετε;"))
+        y+=a*2+b+c*0.50+d*0.20+e*0.10
+        print(f"Εισάγατε {a}*2€ +{b}*1€ +{c}*0.50€ +{d}*0.20 +{e}*0.10={y}€")
+        if y>x:
+            r=y-x
+            print(f"Έχετε ρέστα {r:.2f}€.")
+            y=x
+        elif y<x:
+            r=x-y
+            print(f"Χρωστάτε {r:.2f}€ ακόμα.")
+   
+def make_coffee(x, y):
+    x= {i:x[i]-y.get(i,0) for i in kafetiera.keys()}
+    return x
+def anafora(x,y):
+    print(f"Η καφετιέρα περιλαμβάνει {x}.")
+    print(f"Έχουν εισπραχθεί {y}€ μέχρι στιγμής.")
+money=0
+while coffeemaker=='ON':
+
+    choice=input("Τί καφέ θα θέλατε;(εισάγετε espresso/latte/cappuccino):  ")
+    if choice=='OFF':
+        print("Ο αυτόματος πωλητής θα τερματίσει τη λειτουργία του.")
+        break
+    elif choice=='report':
+        anafora(kafetiera, money)
+        print("\n\nΕπόμενος πελάτης:")
+    elif choice=='espresso':
+        if eparkeia_ulikwn(kafetiera, espresso):
+            nomismata(1.25)
+            kafetiera=make_coffee(kafetiera, espresso)
+            money+=1.25
+            print("Καλή απόλαυση!\n\nΕπόμενος πελάτης:")
+        else:
+            print("Δυστυχώς δεν επαρκούν τα υλικά.")
+            print("Ο αυτόματος πωλητής θα τερματίσει τη λειτουργία του.")
+            break
+    elif choice=='latte':
+        if eparkeia_ulikwn(kafetiera, latte):
+            nomismata(2.10)
+            kafetiera=make_coffee(kafetiera, latte)
+            money+=2.10
+            print("Καλή απόλαυση!\n\nΕπόμενος πελάτης:")
+        else:
+            print("Δυστυχώς δεν επαρκούν τα υλικά.")
+            print("Ο αυτόματος πωλητής θα τερματίσει τη λειτουργία του.")
+            break
+    elif choice=='cappuccino':
+        if eparkeia_ulikwn(kafetiera, cappuccino):
+            nomismata(2.80)
+            kafetiera=make_coffee(kafetiera, cappuccino)
+            money+=2.80
+            print("Καλή απόλαυση!\n\nΕπόμενος πελάτης:")
+        else:
+            print("Δυστυχώς δεν επαρκούν τα υλικά.")
+            print("Ο αυτόματος πωλητής θα τερματίσει τη λειτουργία του.")
+            break
+    else:
+        print("Λάθος επιλογή. Δοκιμάστε ξανά.\n")
+
+
+
+
+
+
+
